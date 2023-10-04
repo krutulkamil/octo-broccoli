@@ -5,6 +5,7 @@ import type {
   DraggableProvidedDraggableProps,
   DraggableProvidedDragHandleProps,
 } from 'react-beautiful-dnd';
+import { XCircleIcon } from '@heroicons/react/20/solid';
 
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
@@ -33,7 +34,12 @@ export function TodoCard({
       ref={innerRef}
       className={styles.wrapperStyles}
     >
-      <h1>CARD CONTENT</h1>
+      <div className={styles.todoWrapperStyles}>
+        <p>{todo.title}</p>
+        <button className={styles.todoButtonStyles}>
+          <XCircleIcon className={styles.todoButtonIconStyles} />
+        </button>
+      </div>
     </div>
   );
 }
