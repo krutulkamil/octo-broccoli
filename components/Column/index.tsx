@@ -1,12 +1,12 @@
 'use client';
 
 import React from 'react';
-import { Draggable, Droppable } from 'react-beautiful-dnd';
+import { Draggable } from 'react-beautiful-dnd';
 
 import { cn } from '@/utils/cn';
+import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppable';
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
-import { cardStyles } from './index.styles';
 
 interface IProps {
   id: TTypedColumn;
@@ -29,7 +29,7 @@ export function Column({ id, todos, index }: IProps) {
                 {...provided.droppableProps}
                 ref={provided.innerRef}
                 className={cn(
-                  cardStyles,
+                  styles.cardStyles,
                   snapshot.isDraggingOver
                     ? styles.isDraggingStyles
                     : styles.isNotDraggingStyles

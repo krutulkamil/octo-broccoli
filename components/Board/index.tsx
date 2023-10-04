@@ -1,14 +1,11 @@
 'use client';
 
 import React, { useEffect } from 'react';
-import {
-  DragDropContext,
-  Droppable,
-  type DropResult,
-} from 'react-beautiful-dnd';
+import { DragDropContext, type DropResult } from 'react-beautiful-dnd';
 
 import { useBoardStore } from '@/store/BoardStore';
 import { Column } from '@/components/Column';
+import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppable';
 import * as styles from './index.styles';
 
 export function Board() {
