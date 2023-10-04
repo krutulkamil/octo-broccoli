@@ -1,15 +1,16 @@
-interface IBoard {
+export interface IBoard {
   columns: Map<TTypedColumn, IColumn>;
 }
 
-type TTypedColumn = 'todo' | 'inprogress' | 'done';
+export const columnTypesArr = ['todo', 'inprogress', 'done'] as const;
+export type TTypedColumn = (typeof columnTypesArr)[number];
 
-interface IColumn {
+export interface IColumn {
   id: TTypedColumn;
   todos: ITodo[];
 }
 
-interface ITodo {
+export interface ITodo {
   $id: string;
   $createdAt: string;
   $updatedAt: string;
@@ -18,10 +19,10 @@ interface ITodo {
   $permissions: string[];
   title: string;
   status: TTypedColumn;
-  image: IImage | null;
+  image?: IImage | null;
 }
 
-interface IImage {
+export interface IImage {
   bucketId: string;
   fileId: string;
 }
