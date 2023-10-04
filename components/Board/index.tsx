@@ -9,13 +9,31 @@ import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppab
 import * as styles from './index.styles';
 
 export function Board() {
-  const { getBoard, board } = useBoardStore();
+  const { getBoard, board, setBoardState } = useBoardStore();
 
   useEffect(() => {
     getBoard();
   }, []);
 
-  function handleDragEnd(result: DropResult) {}
+  function handleDragEnd(result: DropResult) {
+    const { destination, source, type } = result;
+
+    // if dropped outside the list - return
+    if (!destination) return;
+
+    // handle column drag
+    if (type === 'column') {
+      const entries = Array.from(board.columns.entries());
+      const [removed] = entries.splice(source.index, 1);
+      entries.splice(destination.index, 0, removed);
+
+      const rearrangedColumns = new Map(entries);
+      setBoardState({
+        ...board,
+        columns: rearrangedColumns,
+      });
+    }
+  }
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>

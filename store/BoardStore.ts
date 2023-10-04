@@ -6,6 +6,7 @@ import type { IBoard, TTypedColumn, IColumn } from '@/types/todos';
 interface IBoardState {
   board: IBoard;
   getBoard: () => void;
+  setBoardState: (board: IBoard) => void;
 }
 
 export const useBoardStore = create<IBoardState>((set) => ({
@@ -16,4 +17,5 @@ export const useBoardStore = create<IBoardState>((set) => ({
     const board = await getTodosGroupedByColumn();
     set({ board });
   },
+  setBoardState: (board) => set({ board }),
 }));
