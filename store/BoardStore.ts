@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 
 import { getTodosGroupedByColumn } from '@/lib/getTodosGroupedByColumn';
+import type { IBoard, TTypedColumn, IColumn } from '@/types/todos';
 
 interface IBoardState {
   board: IBoard;
