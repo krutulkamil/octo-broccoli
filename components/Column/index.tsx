@@ -14,6 +14,12 @@ interface IProps {
   index: number;
 }
 
+const idToColumnTextMap: { [key in TTypedColumn]: string } = {
+  todo: 'To Do',
+  inprogress: 'In Progress',
+  done: 'Done',
+};
+
 export function Column({ id, todos, index }: IProps) {
   return (
     <Draggable draggableId={id} index={index}>
@@ -23,7 +29,7 @@ export function Column({ id, todos, index }: IProps) {
           {...provided.dragHandleProps}
           ref={provided.innerRef}
         >
-          <Droppable droppableId={index.toString()} type="card">
+          <Droppable droppableId={String(index)} type="card">
             {(provided, snapshot) => (
               <div
                 {...provided.droppableProps}
@@ -35,7 +41,12 @@ export function Column({ id, todos, index }: IProps) {
                     : styles.isNotDraggingStyles
                 )}
               >
-                <h2>{id}</h2>
+                <h2 className={styles.cardTitleStyles}>
+                  {idToColumnTextMap[id]}
+                  <span className={styles.cardTitleLengthStyles}>
+                    {todos.length}
+                  </span>
+                </h2>
               </div>
             )}
           </Droppable>
