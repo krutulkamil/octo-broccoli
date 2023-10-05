@@ -9,7 +9,7 @@ import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppab
 import * as styles from './index.styles';
 
 export function Board() {
-  const { getBoard, board, setBoardState } = useBoardStore();
+  const { getBoard, board, setBoardState, updateTodoInDB } = useBoardStore();
 
   useEffect(() => {
     getBoard();
@@ -79,6 +79,8 @@ export function Board() {
         id: finishCol.id,
         todos: finishTodos,
       });
+
+      updateTodoInDB(todoMoved, finishCol.id);
 
       setBoardState({ ...board, columns: newColumns });
     }
