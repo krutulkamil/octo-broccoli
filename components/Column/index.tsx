@@ -9,6 +9,7 @@ import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppab
 import { TodoCard } from '@/components/TodoCard';
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
+import { useBoardStore } from '@/store/BoardStore';
 
 interface IProps {
   id: TTypedColumn;
@@ -23,6 +24,22 @@ const idToColumnTextMap: { [key in TTypedColumn]: string } = {
 };
 
 export function Column({ id, todos, index }: IProps) {
+  const { searchString } = useBoardStore();
+
+  function getFilteredTodoCount() {
+    if (!searchString) return todos.length;
+
+    return todos.filter((todo) =>
+      todo.title.toLowerCase().includes(searchString.toLowerCase())
+    ).length;
+  }
+
+  const filteredTodos = searchString
+    ? todos.filter((todo) =>
+        todo.title.toLowerCase().includes(searchString.toLowerCase())
+      )
+    : todos;
+
   return (
     <Draggable draggableId={id} index={index}>
       {(provided) => (
@@ -46,12 +63,12 @@ export function Column({ id, todos, index }: IProps) {
                 <h2 className={styles.columnTitleStyles}>
                   {idToColumnTextMap[id]}
                   <span className={styles.columnTitleLengthStyles}>
-                    {todos.length}
+                    {getFilteredTodoCount()}
                   </span>
                 </h2>
 
                 <div className={styles.columnContentWrapperStyles}>
-                  {todos.map((todo, index) => (
+                  {filteredTodos.map((todo, index) => (
                     <Draggable
                       key={todo.$id}
                       draggableId={todo.$id}

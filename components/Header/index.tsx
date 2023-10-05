@@ -2,12 +2,19 @@
 
 import React from 'react';
 import Image from 'next/image';
-import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 import Avatar from 'react-avatar';
+import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
+import { useBoardStore } from '@/store/BoardStore';
 import * as styles from './index.styles';
 
 export function Header() {
+  const { searchString, setSearchString } = useBoardStore();
+
+  function handleSearchStringChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setSearchString(e.target.value);
+  }
+
   return (
     <header>
       <div className={styles.headerGridWrapperStyles}>
@@ -28,6 +35,8 @@ export function Header() {
             <input
               type="text"
               placeholder="Search"
+              value={searchString}
+              onChange={handleSearchStringChange}
               className={styles.searchInputStyles}
             />
             <button type="submit" hidden>

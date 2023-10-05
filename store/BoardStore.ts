@@ -9,6 +9,8 @@ interface IBoardState {
   getBoard: () => void;
   setBoardState: (board: IBoard) => void;
   updateTodoInDB: (todo: ITodo, columnId: TTypedColumn) => void;
+  searchString: string;
+  setSearchString: (searchTerm: string) => void;
 }
 
 export const useBoardStore = create<IBoardState>((set) => ({
@@ -20,7 +22,6 @@ export const useBoardStore = create<IBoardState>((set) => ({
     set({ board });
   },
   setBoardState: (board) => set({ board }),
-
   updateTodoInDB: async (todo, columnId) => {
     await databases.updateDocument(
       process.env.NEXT_PUBLIC_DATABASE_ID!,
@@ -29,4 +30,6 @@ export const useBoardStore = create<IBoardState>((set) => ({
       { title: todo.title, status: columnId }
     );
   },
+  searchString: '',
+  setSearchString: (searchString) => set({ searchString }),
 }));
