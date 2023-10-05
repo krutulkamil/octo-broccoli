@@ -5,15 +5,11 @@ import Image from 'next/image';
 import Avatar from 'react-avatar';
 import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
-import { useBoardStore } from '@/store/BoardStore';
+import { useSearchTodo } from '@/hooks/useSearchTodo';
 import * as styles from './index.styles';
 
 export function Header() {
-  const { searchString, setSearchString } = useBoardStore();
-
-  function handleSearchStringChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchString(e.target.value);
-  }
+  const { searchString, handleSearchStringChange } = useSearchTodo();
 
   return (
     <header>

@@ -7,9 +7,9 @@ import { PlusCircleIcon } from '@heroicons/react/20/solid';
 import { cn } from '@/utils/cn';
 import { StrictModeDroppable as Droppable } from '@/components/StrictModeDroppable';
 import { TodoCard } from '@/components/TodoCard';
+import { useFilteredTodos } from '@/hooks/useFilteredTodos';
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
-import { useBoardStore } from '@/store/BoardStore';
 
 interface IProps {
   id: TTypedColumn;
@@ -24,21 +24,7 @@ const idToColumnTextMap: { [key in TTypedColumn]: string } = {
 };
 
 export function Column({ id, todos, index }: IProps) {
-  const { searchString } = useBoardStore();
-
-  function getFilteredTodoCount() {
-    if (!searchString) return todos.length;
-
-    return todos.filter((todo) =>
-      todo.title.toLowerCase().includes(searchString.toLowerCase())
-    ).length;
-  }
-
-  const filteredTodos = searchString
-    ? todos.filter((todo) =>
-        todo.title.toLowerCase().includes(searchString.toLowerCase())
-      )
-    : todos;
+  const { filteredTodos, getFilteredTodoCount } = useFilteredTodos({ todos });
 
   return (
     <Draggable draggableId={id} index={index}>
