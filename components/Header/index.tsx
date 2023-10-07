@@ -1,35 +1,21 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Avatar from 'react-avatar';
 import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
-import { useBoardStore } from '@/store/BoardStore';
 import { useSearchTodo } from '@/hooks/useSearchTodo';
-import { fetchSuggestion } from '@/lib/fetchSuggestion';
+import { useOpenAISuggestion } from '@/hooks/useOpenAISuggestion';
 import { cn } from '@/utils/cn';
 import * as styles from './index.styles';
 
 export function Header() {
   const { searchString, handleSearchStringChange } = useSearchTodo();
-  const { board } = useBoardStore();
+  const { suggestion, isSuggestionLoading } = useOpenAISuggestion();
 
-  const [loading, setLoading] = useState(false);
-  const [suggestion, setSuggestions] = useState('');
-
-  useEffect(() => {
-    if (!board.columns.size) return;
-    setLoading(true);
-
-    async function fetchSuggestionFunc() {
-      const suggestion = await fetchSuggestion(board);
-      setSuggestions(suggestion);
-      setLoading(false);
-    }
-
-    fetchSuggestionFunc();
-  }, [board]);
+  const suggestionText =
+    suggestion && !isSuggestionLoading ? suggestion : 'GPT is thinking...';
 
   return (
     <header>
@@ -69,10 +55,10 @@ export function Header() {
           <UserCircleIcon
             className={cn(
               styles.suggestionIconStyles,
-              loading && styles.isLoadingSuggestionsStyles
+              isSuggestionLoading && styles.isLoadingSuggestionsStyles
             )}
           />
-          {suggestion && !loading ? suggestion : 'GPT is thinking...'}
+          {suggestionText}
         </p>
       </div>
     </header>
