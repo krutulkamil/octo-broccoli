@@ -1,8 +1,9 @@
 import React from 'react';
 import type { Metadata } from 'next';
 
-import * as styles from './layout.styles';
+import { Modal } from '@/components/Modal';
 import './globals.css';
+import * as styles from './layout.styles';
 
 export const metadata: Metadata = {
   title: 'Dashboard App',
@@ -16,7 +17,10 @@ interface IProps {
 export default function RootLayout({ children }: IProps) {
   return (
     <html lang="en">
-      <body className={styles.bodyWrapperStyles}>{children}</body>
+      <body className={styles.bodyWrapperStyles}>
+        {children}
+        <Modal />
+      </body>
     </html>
   );
 }
