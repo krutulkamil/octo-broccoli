@@ -26,7 +26,12 @@ const idToColumnTextMap: { [key in TTypedColumn]: string } = {
 
 export function Column({ id, todos, index }: IProps) {
   const { filteredTodos, getFilteredTodoCount } = useFilteredTodos({ todos });
-  const { openModal } = useModalStore();
+  const { openModal, setNewTaskType } = useModalStore();
+
+  function handleOpenModal(columnId: TTypedColumn) {
+    setNewTaskType(columnId);
+    openModal();
+  }
 
   return (
     <Draggable draggableId={id} index={index}>
@@ -78,7 +83,7 @@ export function Column({ id, todos, index }: IProps) {
 
                   <div className={styles.addTodoWrapperStyles}>
                     <button
-                      onClick={openModal}
+                      onClick={() => handleOpenModal(id)}
                       className={styles.addTodoButtonStyles}
                     >
                       <PlusCircleIcon

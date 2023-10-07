@@ -54,6 +54,7 @@ export function Modal() {
                     className={styles.dialogInputStyles}
                   />
                 </div>
+
                 <TaskTypeRadioGroup />
               </Dialog.Panel>
             </Transition.Child>
