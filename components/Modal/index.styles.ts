@@ -23,3 +23,13 @@ export const dialogInputMarginStyles = cn(`mt-2`);
 export const dialogInputStyles = cn(
   `w-full border border-gray-300 rounded-md outline-none p-5`
 );
+
+export const dialogImageStyles = cn(
+  `w-full h-44 object-cover mt-2 filter hover:grayscale transition-all duration-150 cursor-not-allowed`
+);
+
+export const uploadImageButtonStyles = cn(
+  `w-full border border-gray-300 rounded-md outline-none p-5 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`
+);
+
+export const uploadImageIconStyles = cn(`h-6 w-6 mr-2 inline-block`);

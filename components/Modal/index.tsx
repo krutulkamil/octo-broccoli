@@ -1,17 +1,31 @@
 'use client';
 
-import React, { Fragment } from 'react';
+import React, { useRef, Fragment } from 'react';
+import Image from 'next/image';
 import { Dialog, Transition } from '@headlessui/react';
+import { PhotoIcon } from '@heroicons/react/20/solid';
 
 import { useModalStore } from '@/store/ModalStore';
 import * as styles from './index.styles';
 import { TaskTypeRadioGroup } from '@/components/TaskTypeRadioGroup';
 
 export function Modal() {
-  const { isOpen, closeModal, newTaskInput, setNewTaskInput } = useModalStore();
+  const imagePickerRef = useRef<HTMLInputElement>(null);
+  const { isOpen, closeModal, newTaskInput, setNewTaskInput, image, setImage } =
+    useModalStore();
 
   function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskInput(e.target.value);
+  }
+
+  function handleImageChange(e: React.ChangeEvent<HTMLInputElement>) {
+    if (!e.target.files?.[0].type.startsWith('image/')) return;
+    setImage(e.target.files[0]);
+  }
+
+  function handleClickButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+    imagePickerRef.current?.click();
   }
 
   return (
@@ -56,6 +70,34 @@ export function Modal() {
                 </div>
 
                 <TaskTypeRadioGroup />
+
+                <div>
+                  <button
+                    onClick={handleClickButtonClick}
+                    className={styles.uploadImageButtonStyles}
+                  >
+                    <PhotoIcon className={styles.uploadImageIconStyles} />
+                    Upload Image
+                  </button>
+
+                  {image && (
+                    <Image
+                      src={URL.createObjectURL(image)}
+                      alt="Uploaded Image"
+                      width={200}
+                      height={200}
+                      className={styles.dialogImageStyles}
+                      onClick={() => setImage(null)}
+                    />
+                  )}
+
+                  <input
+                    type="file"
+                    ref={imagePickerRef}
+                    hidden
+                    onChange={handleImageChange}
+                  />
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

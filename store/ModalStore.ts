@@ -10,6 +10,8 @@ interface IModalState {
   setNewTaskInput: (input: string) => void;
   newTaskType: TTypedColumn;
   setNewTaskType: (columnId: TTypedColumn) => void;
+  image: File | null;
+  setImage: (file: File | null) => void;
 }
 
 export const useModalStore = create<IModalState>((set) => ({
@@ -20,4 +22,6 @@ export const useModalStore = create<IModalState>((set) => ({
   setNewTaskInput: (input) => set({ newTaskInput: input }),
   newTaskType: 'todo',
   setNewTaskType: (columnId) => set({ newTaskType: columnId }),
+  image: null,
+  setImage: (file) => set({ image: file }),
 }));
