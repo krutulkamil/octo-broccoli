@@ -1,5 +1,3 @@
-'use client';
-
 import React from 'react';
 import type {
   DraggableProvidedDraggableProps,
@@ -9,6 +7,7 @@ import { XCircleIcon } from '@heroicons/react/20/solid';
 
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
+import { useBoardStore } from '@/store/BoardStore';
 
 interface IProps {
   todo: ITodo;
@@ -27,6 +26,12 @@ export function TodoCard({
   draggableProps,
   dragHandleProps,
 }: IProps) {
+  const { deleteTodo } = useBoardStore();
+
+  function handleDeleteTodo() {
+    return deleteTodo(index, todo, id);
+  }
+
   return (
     <div
       {...draggableProps}
@@ -36,7 +41,7 @@ export function TodoCard({
     >
       <div className={styles.todoWrapperStyles}>
         <p>{todo.title}</p>
-        <button className={styles.todoButtonStyles}>
+        <button onClick={handleDeleteTodo} className={styles.todoButtonStyles}>
           <XCircleIcon className={styles.todoButtonIconStyles} />
         </button>
       </div>

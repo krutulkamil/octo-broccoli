@@ -14,9 +14,14 @@ export const useOpenAISuggestion = () => {
     setIsLoading(true);
 
     async function fetchSuggestionFunc() {
-      const suggestion = await fetchSuggestion(board);
-      setSuggestions(suggestion);
-      setIsLoading(false);
+      try {
+        const suggestion = await fetchSuggestion(board);
+        setSuggestions(suggestion);
+      } catch (error) {
+        setSuggestions('Something went wrong. Please try again.');
+      } finally {
+        setIsLoading(false);
+      }
     }
 
     fetchSuggestionFunc();
