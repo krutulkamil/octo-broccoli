@@ -10,6 +10,14 @@ export interface IColumn {
   todos: ITodo[];
 }
 
+export type TFlatTodos = {
+  [key in TTypedColumn]: ITodo[];
+};
+
+export type TFlatTodosCounted = {
+  [key in TTypedColumn]: number;
+};
+
 export interface ITodo {
   $id: string;
   $createdAt: string;
