@@ -5,6 +5,7 @@ import { Dialog, Transition } from '@headlessui/react';
 
 import { useModalStore } from '@/store/ModalStore';
 import * as styles from './index.styles';
+import { TaskTypeRadioGroup } from '@/components/TaskTypeRadioGroup';
 
 export function Modal() {
   const { isOpen, closeModal, newTaskInput, setNewTaskInput } = useModalStore();
@@ -53,6 +54,7 @@ export function Modal() {
                     className={styles.dialogInputStyles}
                   />
                 </div>
+                <TaskTypeRadioGroup />
               </Dialog.Panel>
             </Transition.Child>
           </div>
