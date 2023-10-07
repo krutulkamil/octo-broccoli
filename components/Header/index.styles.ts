@@ -33,3 +33,5 @@ export const suggestionTextStyles = cn(
 export const suggestionIconStyles = cn(
   `inline-block h-10 w-10 text-[#0055D1] mr-1`
 );
+
+export const isLoadingSuggestionsStyles = cn(`animate-spin`);

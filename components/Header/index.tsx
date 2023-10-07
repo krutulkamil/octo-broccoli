@@ -1,15 +1,35 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Avatar from 'react-avatar';
 import { MagnifyingGlassIcon, UserCircleIcon } from '@heroicons/react/24/solid';
 
+import { useBoardStore } from '@/store/BoardStore';
 import { useSearchTodo } from '@/hooks/useSearchTodo';
+import { fetchSuggestion } from '@/lib/fetchSuggestion';
+import { cn } from '@/utils/cn';
 import * as styles from './index.styles';
 
 export function Header() {
   const { searchString, handleSearchStringChange } = useSearchTodo();
+  const { board } = useBoardStore();
+
+  const [loading, setLoading] = useState(false);
+  const [suggestion, setSuggestions] = useState('');
+
+  useEffect(() => {
+    if (!board.columns.size) return;
+    setLoading(true);
+
+    async function fetchSuggestionFunc() {
+      const suggestion = await fetchSuggestion(board);
+      setSuggestions(suggestion);
+      setLoading(false);
+    }
+
+    fetchSuggestionFunc();
+  }, [board]);
 
   return (
     <header>
@@ -46,8 +66,13 @@ export function Header() {
 
       <div className={styles.suggestionWrapperStyles}>
         <p className={styles.suggestionTextStyles}>
-          <UserCircleIcon className={styles.suggestionIconStyles} />
-          SUGGESTIONS FOR YOU
+          <UserCircleIcon
+            className={cn(
+              styles.suggestionIconStyles,
+              loading && styles.isLoadingSuggestionsStyles
+            )}
+          />
+          {suggestion && !loading ? suggestion : 'GPT is thinking...'}
         </p>
       </div>
     </header>

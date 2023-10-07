@@ -1,5 +1,6 @@
 import { formatTodosForAI } from '@/lib/formatTodosForAI';
-import type { IBoard, TFlatTodosCounted } from '@/types/todos';
+import type { IBoard } from '@/types/todos';
+import type { ICompletionContent } from '@/types/completions';
 
 export async function fetchSuggestion(board: IBoard) {
   const todos = formatTodosForAI(board);
@@ -9,10 +10,9 @@ export async function fetchSuggestion(board: IBoard) {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ ...todos } satisfies TFlatTodosCounted),
+    body: JSON.stringify({ todos }),
   });
 
-  // TODO: content type
-  const { content } = await response.json();
+  const { content }: ICompletionContent = await response.json();
   return content;
 }
