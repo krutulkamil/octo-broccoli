@@ -28,8 +28,16 @@ export const dialogImageStyles = cn(
   `w-full h-44 object-cover mt-2 filter hover:grayscale transition-all duration-150 cursor-not-allowed`
 );
 
+export const uploadImageWrapperStyles = cn('mt-2');
+
 export const uploadImageButtonStyles = cn(
   `w-full border border-gray-300 rounded-md outline-none p-5 focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2`
 );
 
 export const uploadImageIconStyles = cn(`h-6 w-6 mr-2 inline-block`);
+
+export const addTaskWrapperStyles = cn(`mt-4`);
+
+export const addTaskButtonStyles = cn(
+  `inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 disabled:bg-gray-100 disabled:text-gray-300 disabled:cursor-not-allowed`
+);

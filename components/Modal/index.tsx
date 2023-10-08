@@ -14,7 +14,7 @@ export function Modal() {
   const { isOpen, closeModal, newTaskInput, setNewTaskInput, image, setImage } =
     useModalStore();
 
-  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleTodoInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskInput(e.target.value);
   }
 
@@ -23,8 +23,7 @@ export function Modal() {
     setImage(e.target.files[0]);
   }
 
-  function handleClickButtonClick(e: React.MouseEvent<HTMLButtonElement>) {
-    e.preventDefault();
+  function handleUploadImageClick() {
     imagePickerRef.current?.click();
   }
 
@@ -63,7 +62,7 @@ export function Modal() {
                   <input
                     type="text"
                     value={newTaskInput}
-                    onChange={handleInputChange}
+                    onChange={handleTodoInputChange}
                     placeholder="Enter a task here..."
                     className={styles.dialogInputStyles}
                   />
@@ -71,9 +70,10 @@ export function Modal() {
 
                 <TaskTypeRadioGroup />
 
-                <div>
+                <div className={styles.uploadImageWrapperStyles}>
                   <button
-                    onClick={handleClickButtonClick}
+                    type="button"
+                    onClick={handleUploadImageClick}
                     className={styles.uploadImageButtonStyles}
                   >
                     <PhotoIcon className={styles.uploadImageIconStyles} />
@@ -97,6 +97,16 @@ export function Modal() {
                     hidden
                     onChange={handleImageChange}
                   />
+                </div>
+
+                <div className={styles.addTaskWrapperStyles}>
+                  <button
+                    type="submit"
+                    disabled={!newTaskInput}
+                    className={styles.addTaskButtonStyles}
+                  >
+                    Add Task
+                  </button>
                 </div>
               </Dialog.Panel>
             </Transition.Child>
