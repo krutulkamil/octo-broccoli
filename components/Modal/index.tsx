@@ -6,13 +6,15 @@ import { Dialog, Transition } from '@headlessui/react';
 import { PhotoIcon } from '@heroicons/react/20/solid';
 
 import { useModalStore } from '@/store/ModalStore';
-import * as styles from './index.styles';
+import { useBoardStore } from '@/store/BoardStore';
 import { TaskTypeRadioGroup } from '@/components/TaskTypeRadioGroup';
+import * as styles from './index.styles';
 
 export function Modal() {
   const imagePickerRef = useRef<HTMLInputElement>(null);
-  const { isOpen, closeModal, newTaskInput, setNewTaskInput, image, setImage } =
-    useModalStore();
+  const { isOpen, closeModal } = useModalStore();
+
+  const { newTaskInput, setNewTaskInput, image, setImage } = useBoardStore();
 
   function handleTodoInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskInput(e.target.value);
@@ -27,9 +29,24 @@ export function Modal() {
     imagePickerRef.current?.click();
   }
 
+  function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (!newTaskInput) return;
+
+    // add task to db
+
+    setImage(null);
+    closeModal();
+  }
+
   return (
     <Transition appear show={isOpen} as={Fragment}>
-      <Dialog as="form" onClose={closeModal} className={styles.modalFormStyles}>
+      <Dialog
+        as="form"
+        onSubmit={handleFormSubmit}
+        onClose={closeModal}
+        className={styles.modalFormStyles}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-out duration-300"

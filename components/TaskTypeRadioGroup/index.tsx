@@ -4,8 +4,8 @@ import React from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { CheckCircleIcon } from '@heroicons/react/20/solid';
 
+import { useBoardStore } from '@/store/BoardStore';
 import { cn } from '@/utils/cn';
-import { useModalStore } from '@/store/ModalStore';
 import type { TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
 
@@ -31,7 +31,7 @@ const taskTypes = [
 ] as const;
 
 export function TaskTypeRadioGroup() {
-  const { newTaskType, setNewTaskType } = useModalStore();
+  const { newTaskType, setNewTaskType } = useBoardStore();
 
   function handleRadioChange(type: TTypedColumn) {
     setNewTaskType(type);

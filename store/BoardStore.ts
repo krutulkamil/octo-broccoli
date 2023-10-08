@@ -12,6 +12,12 @@ interface IBoardState {
   deleteTodo: (todoIndex: number, todo: ITodo, columnId: TTypedColumn) => void;
   searchString: string;
   setSearchString: (searchTerm: string) => void;
+  newTaskInput: string;
+  setNewTaskInput: (input: string) => void;
+  newTaskType: TTypedColumn;
+  setNewTaskType: (columnId: TTypedColumn) => void;
+  image: File | null;
+  setImage: (file: File | null) => void;
 }
 
 export const useBoardStore = create<IBoardState>((set, get) => ({
@@ -49,4 +55,10 @@ export const useBoardStore = create<IBoardState>((set, get) => ({
   },
   searchString: '',
   setSearchString: (searchString) => set({ searchString }),
+  newTaskInput: '',
+  setNewTaskInput: (input) => set({ newTaskInput: input }),
+  newTaskType: 'todo',
+  setNewTaskType: (columnId) => set({ newTaskType: columnId }),
+  image: null,
+  setImage: (file) => set({ image: file }),
 }));

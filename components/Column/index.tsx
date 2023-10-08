@@ -11,6 +11,7 @@ import { useFilteredTodos } from '@/hooks/useFilteredTodos';
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
 import { useModalStore } from '@/store/ModalStore';
+import { useBoardStore } from '@/store/BoardStore';
 
 interface IProps {
   id: TTypedColumn;
@@ -26,7 +27,8 @@ const idToColumnTextMap: { [key in TTypedColumn]: string } = {
 
 export function Column({ id, todos, index }: IProps) {
   const { filteredTodos, getFilteredTodoCount } = useFilteredTodos({ todos });
-  const { openModal, setNewTaskType } = useModalStore();
+  const { openModal } = useModalStore();
+  const { setNewTaskType } = useBoardStore();
 
   function handleOpenModal(columnId: TTypedColumn) {
     setNewTaskType(columnId);
