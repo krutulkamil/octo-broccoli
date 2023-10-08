@@ -6,7 +6,6 @@ export default function Home() {
     <main>
       <Header />
       <Board />
-      <h1>Dashboard</h1>
     </main>
   );
 }

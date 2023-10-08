@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import type {
   DraggableProvidedDraggableProps,
@@ -7,7 +7,7 @@ import type {
 import { XCircleIcon } from '@heroicons/react/20/solid';
 
 import { useBoardStore } from '@/store/BoardStore';
-import { getImageUrl } from '@/lib/getImageUrl';
+import { useTodoImage } from '@/hooks/useTodoImage';
 import type { ITodo, TTypedColumn } from '@/types/todos';
 import * as styles from './index.styles';
 
@@ -28,21 +28,8 @@ export function TodoCard({
   draggableProps,
   dragHandleProps,
 }: IProps) {
-  const [imageUrl, setImageUrl] = useState<string | null>(null);
   const { deleteTodo } = useBoardStore();
-
-  useEffect(() => {
-    if (todo.image) {
-      const image = todo.image;
-
-      const fetchImage = async () => {
-        const imageUrl = await getImageUrl(image);
-        setImageUrl(imageUrl.href);
-      };
-
-      fetchImage();
-    }
-  }, [todo]);
+  const { imageUrl } = useTodoImage({ todo });
 
   function handleDeleteTodo() {
     return deleteTodo(index, todo, id);
