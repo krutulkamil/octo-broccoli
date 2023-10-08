@@ -14,7 +14,14 @@ export function Modal() {
   const imagePickerRef = useRef<HTMLInputElement>(null);
   const { isOpen, closeModal } = useModalStore();
 
-  const { newTaskInput, setNewTaskInput, image, setImage } = useBoardStore();
+  const {
+    newTaskInput,
+    setNewTaskInput,
+    image,
+    setImage,
+    newTaskType,
+    addTask,
+  } = useBoardStore();
 
   function handleTodoInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     setNewTaskInput(e.target.value);
@@ -33,8 +40,7 @@ export function Modal() {
     e.preventDefault();
     if (!newTaskInput) return;
 
-    // add task to db
-
+    addTask(newTaskInput, newTaskType, image);
     setImage(null);
     closeModal();
   }
